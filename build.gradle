@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.spark:spark-core_2.12:3.4.0'
+    implementation 'org.apache.spark:spark-sql_2.12:3.4.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainClassName = 'com.example.SparkExample'
+    applicationDefaultJvmArgs = ["-Xms512m", "-Xmx1024m"]
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    zip64 true // Enable zip64 extension
+}
